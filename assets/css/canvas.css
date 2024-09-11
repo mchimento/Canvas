@@ -1,0 +1,88 @@
+@charset "UTF-8";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Scrollable Thumbnail Menu */
+.thumbnail-menu {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 10px;
+    width: 100%;
+    background-color: #f8f8f8;
+    white-space: nowrap;
+    justify-content: center; 
+}
+
+.thumbnail {
+    background-color: white;
+    border-radius: 50%;
+    padding: 5px;
+    width: 60px;
+    height: 60px;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* Full-Screen Canvas Area */
+.canvas {
+    flex-grow: 1;
+    width: 100%;
+    height: 500px;
+    position: relative;
+    background-color: #eaeaea;
+    background-image: url("../images/background.png") ;
+    background-size: cover;
+    background-repeat: no-repeat !important;
+    background-position: center;
+}
+
+/* Style for draggable images in the canvas */
+.draggable {
+    position: absolute;
+    outline: 2px solid transparent;
+    cursor: move;
+}
+
+/* Blue highlight for selected image */
+.selected {
+    outline: 2px solid blue;
+}
+
+/* Resize handle, visible only when image is selected */
+.resize-handle {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background-color: blue;
+    bottom: 0;
+    right: 0;
+    display: none;
+    cursor: nwse-resize;
+}
+
+.selected .resize-handle {
+    display: block;
+}
