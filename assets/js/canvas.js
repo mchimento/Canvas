@@ -18,7 +18,7 @@ thumbnails.forEach(thumbnail => {
     });
 });
 
-// Handle drop on canvas
+// Handle drop on canvas from thumbnails menu
 canvas.addEventListener('dragover', function(e) {
     e.preventDefault();
 });
@@ -40,6 +40,7 @@ canvas.addEventListener('drop', function(e) {
         img.style.width = '100%';
         img.style.height = 'auto';
         img.setAttribute('draggable', 'false');
+
         imgContainer.appendChild(img);
 
         const resizeHandle = document.createElement('div');
@@ -60,6 +61,7 @@ canvas.addEventListener('drop', function(e) {
 
 // Function to select newly dropped images
 function selectDroppedImage(imgContainer) {
+    deselectAllImages();
     imgContainer.classList.add('selected');
     selectedImages.push(imgContainer);
 }
@@ -69,6 +71,7 @@ function selectImage(e) {
     e.stopPropagation();
 
     if (e.shiftKey) {
+        //If shift is press, then keep selecting images
         if (selectedImages.includes(e.currentTarget)) {
             // Deselect if already selected
             e.currentTarget.classList.remove('selected');
@@ -80,9 +83,13 @@ function selectImage(e) {
         }
     } else {
         // Deselect all other images if shift is not pressed
-        deselectAllImages();
-        selectedImages = [e.currentTarget];
-        e.currentTarget.classList.add('selected');
+        if (selectedImages.length <= 1) {      
+            deselectAllImages();
+            selectedImages = [e.currentTarget];
+            e.currentTarget.classList.add('selected');
+        } else {
+            
+        }
     }
 }
 
@@ -197,20 +204,19 @@ function stopSelection(e) {
     isSelecting = false;
     document.removeEventListener('mousemove', resizeSelectionBox);
     document.removeEventListener('mouseup', stopSelection);
+    deselectAllImages();
 
     const boxRect = selectionBox.getBoundingClientRect();
     const images = canvas.querySelectorAll('.draggable');
 
     images.forEach(img => {
         const imgRect = img.getBoundingClientRect();
-        if (boxRect.left < imgRect.right &&
-            boxRect.right > imgRect.left &&
+        if (boxRect.right > imgRect.left &&
             boxRect.top < imgRect.bottom &&
-            boxRect.bottom > imgRect.top) {
-            if (!selectedImages.includes(img)) {
+            boxRect.left < imgRect.right &&
+            boxRect.bottom > imgRect.top) {            
                 selectedImages.push(img);
                 img.classList.add('selected');
-            }
         }
     });
 

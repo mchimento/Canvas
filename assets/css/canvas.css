@@ -63,12 +63,13 @@ body {
 .draggable {
     position: absolute;
     outline: 2px solid transparent;
-    cursor: move;
+    cursor: pointer;
 }
 
 /* Blue highlight for selected image */
 .selected {
     outline: 2px solid blue;
+    cursor: grab;
 }
 
 /* Resize handle, visible only when image is selected */
