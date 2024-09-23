@@ -190,8 +190,10 @@ canvas.addEventListener('mousedown', function(e) {
 // Resize selection box
 function resizeSelectionBox(e) {
     if (isSelecting) {
-        const currentX = e.offsetX;
-        const currentY = e.offsetY;
+        const canvasRect = canvas.getBoundingClientRect();
+        const currentX = e.clientX - canvasRect.left;
+        const currentY = e.clientY - canvasRect.top;
+
         selectionBox.style.width = `${Math.abs(currentX - startX)}px`;
         selectionBox.style.height = `${Math.abs(currentY - startY)}px`;
         selectionBox.style.left = `${Math.min(currentX, startX)}px`;
@@ -204,20 +206,20 @@ function stopSelection(e) {
     isSelecting = false;
     document.removeEventListener('mousemove', resizeSelectionBox);
     document.removeEventListener('mouseup', stopSelection);
-    deselectAllImages();
-
+    
     const boxRect = selectionBox.getBoundingClientRect();
     const images = canvas.querySelectorAll('.draggable');
+    deselectAllImages();
 
     images.forEach(img => {
         const imgRect = img.getBoundingClientRect();
         if (boxRect.right > imgRect.left &&
             boxRect.top < imgRect.bottom &&
             boxRect.left < imgRect.right &&
-            boxRect.bottom > imgRect.top) {            
-                selectedImages.push(img);
-                img.classList.add('selected');
-        }
+            boxRect.bottom > imgRect.top) {
+            selectedImages.push(img);
+            img.classList.add('selected');
+        } 
     });
 
     // Remove the selection box from the canvas
