@@ -53,7 +53,7 @@ body {
     height: 500px;
     position: relative;
     background-color: #eaeaea;
-    background-image: url("../images/background.png") ;
+    background-image: url("../images/background.jpg") ;
     background-size: cover;
     background-repeat: no-repeat !important;
     background-position: center;
@@ -86,4 +86,25 @@ body {
 
 .selected .resize-handle {
     display: block;
+}
+
+.background-selector {
+    position: absolute;
+    top: 20px; /* Adjust depending on where you want it */
+    left: 10px; /* Align it to the left */
+}
+
+#toggle-button {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#dropdown-container {
+    margin-top: 10px;
+}
+
+#background-dropdown {
+    padding: 10px;
+    font-size: 14px;
 }

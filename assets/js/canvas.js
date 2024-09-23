@@ -226,3 +226,29 @@ function stopSelection(e) {
     canvas.removeChild(selectionBox);
     selectionBox = null;
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const backgroundDropdown = document.getElementById('background-dropdown');
+    const canvas = document.getElementById('canvas');
+
+    // List of available background images
+    const images = [
+        "background.jpg",
+        "background2.jpg"
+        // Add more background image names here
+    ];
+
+    // Dynamically populate the dropdown with image names
+    images.forEach(image => {
+        const option = document.createElement('option');
+        option.value = image;
+        option.textContent = image;
+        backgroundDropdown.appendChild(option);
+    });
+
+    // Change the canvas background when a new option is selected
+    backgroundDropdown.addEventListener('change', (event) => {
+        const selectedImage = event.target.value;
+        canvas.style.backgroundImage = `url('assets/images/${selectedImage}')`;
+    });
+});
