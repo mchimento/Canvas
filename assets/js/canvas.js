@@ -155,6 +155,7 @@ function resizeImage(e) {
 function stopResizing() {
     isResizing = false;
     document.removeEventListener('mousemove', resizeImage);
+    document.removeEventListener('mouseup', stopResizing);
 }
 
 // Delete selected images
@@ -227,28 +228,29 @@ function stopSelection(e) {
     selectionBox = null;
 }
 
+// Dictionary of available background images
+backgrounds = {
+    "Park" : "background.jpg",
+    "Beach" : "background2.jpg"
+    // Add more background image names here
+};
+
 document.addEventListener('DOMContentLoaded', () => {
     const backgroundDropdown = document.getElementById('background-dropdown');
     const canvas = document.getElementById('canvas');
 
-    // List of available background images
-    const images = [
-        "background.jpg",
-        "background2.jpg"
-        // Add more background image names here
-    ];
-
     // Dynamically populate the dropdown with image names
-    images.forEach(image => {
+    for (image in backgrounds) {    
         const option = document.createElement('option');
         option.value = image;
         option.textContent = image;
         backgroundDropdown.appendChild(option);
-    });
+    }
 
     // Change the canvas background when a new option is selected
     backgroundDropdown.addEventListener('change', (event) => {
         const selectedImage = event.target.value;
-        canvas.style.backgroundImage = `url('assets/images/${selectedImage}')`;
+        const imageName = backgrounds[selectedImage]
+        canvas.style.backgroundImage = `url('assets/images/backgrounds/${imageName}')`;
     });
 });
