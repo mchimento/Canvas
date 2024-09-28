@@ -63,7 +63,7 @@ body {
 .draggable {
     position: absolute;
     outline: 2px solid transparent;
-    cursor: pointer;
+    cursor: pointer;    
 }
 
 /* Blue highlight for selected image */

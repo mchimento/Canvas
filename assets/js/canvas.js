@@ -95,7 +95,11 @@ function selectImage(e) {
 
 // Deselect images when clicking on the background (canvas)
 canvas.addEventListener('click', function() {
-    deselectAllImages();
+    if (isResizing) {        
+        isResizing = false;
+    } else {
+        deselectAllImages();
+    }
 });
 
 function deselectAllImages() {
@@ -106,6 +110,7 @@ function deselectAllImages() {
 // Dragging the images
 function startDragging(e) {
     if (e.target.classList.contains('resize-handle')) return;
+    e.preventDefault(); // Prevent default drag behavior
     isDragging = true;
 
     dragOffsets = selectedImages.map(img => {
@@ -138,6 +143,7 @@ function stopDragging() {
 // Resizing the image using the bottom-right corner
 function startResizing(e) {
     e.stopPropagation();
+    e.preventDefault(); // Prevent default drag behavior
     isResizing = true;
     document.addEventListener('mousemove', resizeImage);
     document.addEventListener('mouseup', stopResizing);
@@ -152,8 +158,7 @@ function resizeImage(e) {
     }
 }
 
-function stopResizing() {
-    isResizing = false;
+function stopResizing() {    
     document.removeEventListener('mousemove', resizeImage);
     document.removeEventListener('mouseup', stopResizing);
 }
